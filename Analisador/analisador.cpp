@@ -6,8 +6,8 @@
 using namespace std;
 
 enum Category {
-    PtVg,Se,Entao,Senao,Fim,Enquanto,Eof,Repita,
-    Id,Atr,Opl,Opa,Ou, E, Potencia,Verd,Falso,Opm,AbPar,FePar,CteI
+    PtVg, Se, Entao, Senao, Fim, Enquanto, Eof, Repita,
+    Id,Atr,Opl,Opa,Ou, E,Verd,Falso,Opm,AbPar,FePar,CteI
 };
 
 FILE *file;
@@ -34,8 +34,6 @@ class Token{
                 categ = PtVg;
             }else if (strcmp(lexema, "enquanto") == 0){
                 categ = Enquanto;
-            }else if (strcmp(lexema, "até") == 0){
-                categ = Ate;
             }else if (strcmp(lexema, "repita") == 0){
                 categ = Repita;
             }else if (strcmp(lexema, "=") == 0){
@@ -65,7 +63,7 @@ class Token{
             coluna+=strlen(this->lexema);
             fscanf(file, "%s", this->lexema);
         }
-          public:
+        public:
         Category categ;
         char lexema[MAX_STRING];
         int linha=1, coluna=1;
@@ -224,7 +222,7 @@ void fEbr(){
 void fEb(){
     fEa();
     if(tk->categ == Opl){
-          tk->next();
+        tk->next();
         fEa();
     }
 
@@ -257,8 +255,9 @@ void fPa(){
         }else printf("')' esperado lin:%d col:%d\n", tk->linha, tk->coluna);
     }else if (    tk->categ == Id
                 ||tk->categ == CteI
-                ||tk->categ == CteR){
-        tk->next();
+                ||tk->categ == Verd)
+                || tk->categ == Falso{
+                tk->next();
         return;
     }else printf("fator aritmético esperado lin:%d col:%d\n", tk->linha, tk->coluna);
 }
